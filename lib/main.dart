@@ -16,6 +16,10 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
+  void _onPress(BuildContext context) {
+    Navigator.of(context).push(new MaterialPageRoute(
+        builder: (BuildContext buildContext) => LobbyPage()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +29,37 @@ class HomePage extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Text(
               'Welcome to race place',
+            ),
+            RaisedButton(
+              child: Text("Race"),
+              onPressed: () {
+                _onPress(context);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class LobbyPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Race place"),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Text(
+              'Finding match...',
             ),
           ],
         ),
