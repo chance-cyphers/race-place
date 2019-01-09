@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:race_place/entrant.dart';
 import 'package:race_place/race_api_client.dart';
+import 'package:race_place/race_page.dart';
 
 class LobbyPage extends StatefulWidget {
   LobbyPage({Key key, @required this.entrant}) : super(key: key);
@@ -49,27 +50,6 @@ class _LobbyPageState extends State<LobbyPage> {
           children: <Widget>[
             Text(
               'Finding match for ${widget.entrant.userId}...',
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class RacePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Race place"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text(
-              'You are racing now. Just so you know.',
             ),
           ],
         ),
