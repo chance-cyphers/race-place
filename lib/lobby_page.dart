@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:race_place/entrant.dart';
+import 'package:race_place/race_api_client.dart';
 
 
 class LobbyPage extends StatefulWidget {
@@ -19,7 +20,12 @@ class _LobbyPageState extends State<LobbyPage> {
   void initState() {
     super.initState();
     Timer.periodic(new Duration(seconds: 2), (timer) {
-      print("asd");
+      raceApiClient.getTrack(widget.entrant.links.track)
+        .then((track) {
+          print(track.status);
+          print(track.entrants[0].userId);
+          print(track.entrants[0].distance);
+      });
     });
   }
 

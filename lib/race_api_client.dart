@@ -2,6 +2,8 @@ import 'package:http/http.dart' as http;
 import 'package:race_place/entrant.dart';
 import 'dart:convert';
 
+import 'package:race_place/track.dart';
+
 final RaceApiClient raceApiClient = new RaceApiClient._private();
 
 class RaceApiClient {
@@ -17,6 +19,14 @@ class RaceApiClient {
 
     return http.post(url, body: json, headers: headers).then((response) {
       return Entrant.fromJson(jsonDecode(response.body));
+    }).catchError((err) {
+      print("ERROR: ${err.toString()}");
+    });
+  }
+
+  Future<Track> getTrack(String trackLink) {
+    return http.get(trackLink).then((response) {
+      return Track.fromJson(jsonDecode(response.body));
     }).catchError((err) {
       print("ERROR: ${err.toString()}");
     });
