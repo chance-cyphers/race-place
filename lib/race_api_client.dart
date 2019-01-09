@@ -12,8 +12,9 @@ class RaceApiClient {
   Future<Entrant> createEntrant(String userId) {
     var body = new CreateEntrantRequest(userId);
     var json = jsonEncode(body.toJson());
-    var headers = {"Content-Type": "application/json"};
-    var url = host + "/v2/entrant";
+    const headers = {"Content-Type": "application/json"};
+    const url = host + "/v2/entrant";
+
     return http.post(url, body: json, headers: headers).then((response) {
       return Entrant.fromJson(jsonDecode(response.body));
     }).catchError((err) {
