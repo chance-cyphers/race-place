@@ -13,22 +13,21 @@ class CreateEntrantRequest {
 }
 
 @JsonSerializable()
-class CreateEntrantResponse {
-  CreateEntrantResponse(this.userId, this.links);
+class Entrant {
+  Entrant(this.userId, this.links);
 
   String userId;
   Links links;
 
-  factory CreateEntrantResponse.fromJson(Map<String, dynamic> json) => _$CreateEntrantResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$CreateEntrantResponseToJson(this);
+  factory Entrant.fromJson(Map<String, dynamic> json) => _$EntrantFromJson(json);
+  Map<String, dynamic> toJson() => _$EntrantToJson(this);
 }
 
 @JsonSerializable()
 class Links {
-  Links(this.locationUpdate, this.self);
+  Links(this.track);
 
-  String locationUpdate;
-  String self;
+  String track;
 
   factory Links.fromJson(Map<String, dynamic> json) => _$LinksFromJson(json);
   Map<String, dynamic> toJson() => _$LinksToJson(this);

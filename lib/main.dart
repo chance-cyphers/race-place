@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:race_place/race_api_client.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,8 +18,11 @@ class MyApp extends StatelessWidget {
 
 class HomePage extends StatelessWidget {
   void _onPress(BuildContext context) {
-    Navigator.of(context).push(new MaterialPageRoute(
-        builder: (BuildContext buildContext) => LobbyPage()));
+    raceApiClient.createEntrant("placeholderJohnson").then((entrant) {
+      print("TRACK link: ${entrant.links.track}");
+//    Navigator.of(context).push(new MaterialPageRoute(
+//        builder: (BuildContext buildContext) => LobbyPage()));
+    });
   }
 
   @override
