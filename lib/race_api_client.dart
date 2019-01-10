@@ -9,26 +9,25 @@ final RaceApiClient raceApiClient = new RaceApiClient._private();
 class RaceApiClient {
   RaceApiClient._private();
 
-  static const String host = "http://race-apu.herokuapp.com";
+  static const String _host = "http://race-apu.herokuapp.com";
 
   Future<Entrant> createEntrant(String userId) {
     var body = new CreateEntrantRequest(userId);
     var json = jsonEncode(body.toJson());
-    const headers = {"Content-Type": "application/json"};
-    const url = host + "/v2/entrant";
+    const url = _host + "/v2/entrant";
 
-    return http.post(url, body: json, headers: headers).then((response) {
+    return http.post(url,body: json, headers: {"Content-Type": "application/json"}).then((response) {
       return Entrant.fromJson(jsonDecode(response.body));
-    }).catchError((err) {
-      print("ERROR: ${err.toString()}");
-    });
+    }).catchError(_printError);
   }
 
   Future<Track> getTrack(String trackLink) {
     return http.get(trackLink).then((response) {
       return Track.fromJson(jsonDecode(response.body));
-    }).catchError((err) {
-      print("ERROR: ${err.toString()}");
-    });
+    }).catchError(_printError);
+  }
+
+  void _printError(Object err) {
+    print("ERROR: ${err.toString()}");
   }
 }
