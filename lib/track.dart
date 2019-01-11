@@ -8,6 +8,7 @@ class Track {
 
   String status;
   List<TrackEntrant> entrants;
+  Links links;
 
   factory Track.fromJson(Map<String, dynamic> json) => _$TrackFromJson(json);
 }
@@ -20,4 +21,13 @@ class TrackEntrant {
   double distance;
 
   factory TrackEntrant.fromJson(Map<String, dynamic> json) => _$TrackEntrantFromJson(json);
+}
+
+@JsonSerializable()
+class Links {
+  Links(this.locationUpdate);
+
+  String locationUpdate;
+
+  factory Links.fromJson(Map<String, dynamic> json) => _$LinksFromJson(json);
 }

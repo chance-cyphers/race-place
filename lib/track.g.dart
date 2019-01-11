@@ -13,11 +13,17 @@ Track _$TrackFromJson(Map<String, dynamic> json) {
           ?.map((e) => e == null
               ? null
               : TrackEntrant.fromJson(e as Map<String, dynamic>))
-          ?.toList());
+          ?.toList())
+    ..links = json['links'] == null
+        ? null
+        : Links.fromJson(json['links'] as Map<String, dynamic>);
 }
 
-Map<String, dynamic> _$TrackToJson(Track instance) =>
-    <String, dynamic>{'status': instance.status, 'entrants': instance.entrants};
+Map<String, dynamic> _$TrackToJson(Track instance) => <String, dynamic>{
+      'status': instance.status,
+      'entrants': instance.entrants,
+      'links': instance.links
+    };
 
 TrackEntrant _$TrackEntrantFromJson(Map<String, dynamic> json) {
   return TrackEntrant(
@@ -26,3 +32,10 @@ TrackEntrant _$TrackEntrantFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$TrackEntrantToJson(TrackEntrant instance) =>
     <String, dynamic>{'userId': instance.userId, 'distance': instance.distance};
+
+Links _$LinksFromJson(Map<String, dynamic> json) {
+  return Links(json['locationUpdate'] as String);
+}
+
+Map<String, dynamic> _$LinksToJson(Links instance) =>
+    <String, dynamic>{'locationUpdate': instance.locationUpdate};
