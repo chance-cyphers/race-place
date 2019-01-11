@@ -23,9 +23,12 @@ class _LobbyPageState extends State<LobbyPage> {
     timer = Timer.periodic(new Duration(seconds: 2), (timer) {
       raceApiClient.getTrack(widget.entrant.links.track).then((track) {
         if (track.status == "started") {
-          Navigator.of(context).push(new MaterialPageRoute(
-              maintainState: false,
-              builder: (BuildContext buildContext) => RacePage()));
+          Navigator.pushAndRemoveUntil(
+              context,
+              new MaterialPageRoute(
+                  maintainState: false,
+                  builder: (BuildContext buildContext) => RacePage()),
+              ModalRoute.withName("/"));
           timer.cancel();
         }
       });
