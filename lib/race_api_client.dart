@@ -13,13 +13,10 @@ class RaceApiClient {
   static const String _host = "http://race-apu.herokuapp.com";
 
   Future<Entrant> createEntrant(String userId) {
-    var body = new CreateEntrantRequest(userId);
-    var json = jsonEncode(body.toJson());
-    const url = _host + "/v2/entrant";
-
-    return http.post(url,body: json, headers: {"Content-Type": "application/json"}).then((response) {
+    var json = jsonEncode(new CreateEntrantRequest(userId).toJson());
+    return _post(_host + "/v2/entrant", json).then((response) {
       return Entrant.fromJson(jsonDecode(response.body));
-    }).catchError(_printError);
+    });
   }
 
   Future<Track> getTrack(String trackLink) {
@@ -29,13 +26,18 @@ class RaceApiClient {
   }
 
   Future<Location> updateLocation(String locLink, Location loc) {
-    var json = jsonEncode(loc.toJson());
-    return http.post(locLink, body: json ,headers: {"Content-Type": "application/json"}).then((response) {
+    return _post(locLink, jsonEncode(loc.toJson())).then((response) {
       print("resp: ${response.toString()}");
-    }).catchError(_printError);
+    });
   }
 
-  void _printError(Object err) {
-    print("ERROR: ${err.toString()}");
+  Future<http.Response> _post(String url, String json) {
+    return http.post(url,
+        body: json,
+        headers: {"Content-Type": "application/json"}).catchError((err) {
+      print("ERROR: ${err.toString()}");
+    });
   }
+
+  void _printError(Object err) {}
 }
