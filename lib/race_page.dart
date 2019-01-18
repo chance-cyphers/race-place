@@ -11,6 +11,8 @@ class RacePage extends StatefulWidget {
 class _RacePageState extends State<RacePage> {
 
   StreamSubscription<Map<String, double>> _locationSubscription;
+  double _currentLat = 0.0;
+  double _currentLon = 0.0;
 
   @override
   void initState() {
@@ -18,7 +20,12 @@ class _RacePageState extends State<RacePage> {
 
     var location = new Location();
 
+
     this._locationSubscription = location.onLocationChanged().listen((Map<String,double> currentLocation) {
+      setState(() {
+        _currentLat = currentLocation["latitude"];
+        _currentLon = currentLocation["longitude"];
+      });
       print(currentLocation["latitude"]);
       print(currentLocation["longitude"]);
       print(currentLocation["accuracy"]);
@@ -46,6 +53,9 @@ class _RacePageState extends State<RacePage> {
           children: <Widget>[
             Text(
               'You are racing now. Just so you know.',
+            ),
+            Text(
+              _currentLat.toString() + ", " + _currentLon.toString(),
             ),
           ],
         ),
