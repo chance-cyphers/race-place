@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:race_place/entrant.dart';
-import 'package:race_place/lobby_bloc.dart';
-import 'package:race_place/race_page.dart';
+import 'package:race_place/bloc/lobby_bloc.dart';
+import 'package:race_place/page/race_page.dart';
 
 class LobbyPage extends StatefulWidget {
   LobbyPage({Key key, @required this.entrant}) : super(key: key);
@@ -13,7 +13,6 @@ class LobbyPage extends StatefulWidget {
 }
 
 class _LobbyPageState extends State<LobbyPage> {
-
   LobbyBloc _lobbyBloc;
 
   @override

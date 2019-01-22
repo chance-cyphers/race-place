@@ -1,5 +1,5 @@
 import 'package:race_place/entrant.dart';
-import 'package:race_place/lobby_bloc.dart';
+import 'package:race_place/bloc/lobby_bloc.dart';
 import 'package:test/test.dart';
 
 void main() {

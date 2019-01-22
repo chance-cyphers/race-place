@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:race_place/home_page.dart';
+import 'package:race_place/page/home_page.dart';
 
 void main() => runApp(MyApp());
 

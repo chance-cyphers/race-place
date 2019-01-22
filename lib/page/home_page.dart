@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:race_place/lobby_page.dart';
+import 'package:race_place/page/lobby_page.dart';
 import 'package:race_place/race_api_client.dart';
 
 class HomePage extends StatelessWidget {
