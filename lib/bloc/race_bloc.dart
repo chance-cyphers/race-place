@@ -14,6 +14,7 @@ class RaceBloc {
   Stream<Coordinates> get updatedLoc => _updatedLocController.stream;
 
   RaceBloc(this._track) {
+    _updatedLocController = StreamController<Coordinates>();
     _updatedLocController.onListen = _startLocUpdates;
     _locEventSource = LocationEventSource();
   }
