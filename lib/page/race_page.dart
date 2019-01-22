@@ -16,53 +16,45 @@ class RacePage extends StatefulWidget {
 }
 
 class _RacePageState extends State<RacePage> {
-  StreamSubscription<Map<String, double>> _locationSubscription;
-  double _currentLat = 0.0;
-  double _currentLon = 0.0;
+
+  LocationEventSource _locEventSource;
 
   @override
   void initState() {
     super.initState();
-
-    var location = new Location();
-    this._locationSubscription = location
-        .onLocationChanged()
-        .listen((Map<String, double> currentLocation) {
-      setState(() {
-        _currentLat = currentLocation["latitude"];
-        _currentLon = currentLocation["longitude"];
-      });
-      print(currentLocation["latitude"].toString() +
-          ", " +
-          currentLocation["longitude"].toString());
-    });
+    _locEventSource = LocationEventSource();
   }
 
   @override
   void deactivate() {
     super.deactivate();
-    _locationSubscription.cancel();
+    _locEventSource.close();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Race place"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text(
-              'You are racing now. Just so you know.',
+    return StreamBuilder<Coordinates>(
+      stream: _locEventSource.currentLoc,
+      builder: (context, snap) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text("Race place"),
+          ),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Text(
+                  'You are racing now. Just so you know.',
+                ),
+                Text(
+                  snap.data.lat.toString() + ", " + snap.data.lon.toString(),
+                ),
+              ],
             ),
-            Text(
-              _currentLat.toString() + ", " + _currentLon.toString(),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      }
     );
   }
 }
