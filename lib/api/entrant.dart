@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'entrant.g.dart';
+part 'package:race_place/api/entrant.g.dart';
 
 @JsonSerializable()
 class CreateEntrantRequest {

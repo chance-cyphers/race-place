@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'track.g.dart';
+part 'package:race_place/api/track.g.dart';
 
 @JsonSerializable()
 class Track {

@@ -1,4 +1,4 @@
-import 'package:race_place/entrant.dart';
+import 'package:race_place/api/entrant.dart';
 import 'package:race_place/bloc/lobby_bloc.dart';
 import 'package:test/test.dart';
 

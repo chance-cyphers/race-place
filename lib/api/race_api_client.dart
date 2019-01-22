@@ -1,9 +1,9 @@
 import 'package:http/http.dart' as http;
-import 'package:race_place/entrant.dart';
-import 'package:race_place/location.dart';
+import 'package:race_place/api/entrant.dart';
+import 'package:race_place/api/location.dart';
 import 'dart:convert';
 
-import 'package:race_place/track.dart';
+import 'package:race_place/api/track.dart';
 
 final RaceApiClient raceApiClient = new RaceApiClient._private();
 

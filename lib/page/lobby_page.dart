@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:race_place/entrant.dart';
+import 'package:race_place/api/entrant.dart';
 import 'package:race_place/bloc/lobby_bloc.dart';
 import 'package:race_place/page/race_page.dart';
+import 'package:race_place/api/track.dart';
 
 class LobbyPage extends StatefulWidget {
   LobbyPage({Key key, @required this.entrant}) : super(key: key);
@@ -19,19 +20,17 @@ class _LobbyPageState extends State<LobbyPage> {
   void initState() {
     super.initState();
     _lobbyBloc = LobbyBloc(widget.entrant);
-    _lobbyBloc.matchFound.listen((matchFound) {
-      if (matchFound) {
-        gotoRace();
-      }
+    _lobbyBloc.trackStarted.listen((track) {
+      gotoRace(track);
     });
   }
 
-  void gotoRace() {
+  void gotoRace(Track track) {
     Navigator.pushAndRemoveUntil(
         context,
         new MaterialPageRoute(
             maintainState: false,
-            builder: (BuildContext buildContext) => RacePage()),
+            builder: (BuildContext buildContext) => RacePage(track: track)),
         ModalRoute.withName("/"));
   }
 
