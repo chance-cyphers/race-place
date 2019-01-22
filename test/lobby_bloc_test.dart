@@ -8,10 +8,10 @@ void main() {
     var entrant = Entrant("bob", Links("tracks.com"));
     var lobbyBloc = LobbyBloc(entrant);
 
-    var matchFound = lobbyBloc.matchFound.listen(expectAsync1((theBool) { // ignore: cancel_subscriptions
-      print("the bool: " + theBool.toString());
-    }, count: 3));
-
+//    var matchFound = lobbyBloc.matchFound.listen(expectAsync1((theBool) { // ignore: cancel_subscriptions
+//      print("the bool: " + theBool.toString());
+//    }, count: 3));
+//
   });
 
 

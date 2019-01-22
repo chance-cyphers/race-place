@@ -35,6 +35,7 @@ class _RacePageState extends State<RacePage> {
   Widget build(BuildContext context) {
     return StreamBuilder<Coordinates>(
       stream: _locEventSource.currentLoc,
+      initialData: Coordinates(0, 0),
       builder: (context, snap) {
         return Scaffold(
           appBar: AppBar(
@@ -100,6 +101,7 @@ class LocationEventSource {
   Stream<Coordinates> get currentLoc => _currentLocController.stream;
 
   LocationEventSource() {
+    _currentLocController = StreamController<Coordinates>();
     _currentLocController.onListen = _listenForLocation;
   }
 
