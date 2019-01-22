@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:location/location.dart';
+import 'package:race_place/api/location.dart' as loc;
 import 'package:race_place/api/race_api_client.dart';
 import 'package:race_place/api/track.dart';
-import 'package:race_place/api/location.dart' as loc;
+import 'package:race_place/bloc/location_source.dart';
 
 class RacePage extends StatefulWidget {
   final Track track;
@@ -94,37 +94,3 @@ class RaceBloc {
   }
 }
 
-class LocationEventSource {
-  StreamController<Coordinates> _currentLocController;
-  StreamSubscription<Map<String, double>> _locationSubscription;
-
-  Stream<Coordinates> get currentLoc => _currentLocController.stream;
-
-  LocationEventSource() {
-    _currentLocController = StreamController<Coordinates>();
-    _currentLocController.onListen = _listenForLocation;
-  }
-
-  void _listenForLocation() {
-    var location = new Location();
-    this._locationSubscription = location
-        .onLocationChanged()
-        .listen((Map<String, double> currentLocation) {
-      var currentLat = currentLocation["latitude"];
-      var currentLon = currentLocation["longitude"];
-      _currentLocController.add(Coordinates(currentLat, currentLon));
-    });
-  }
-
-  void close() {
-    _locationSubscription.cancel();
-    _currentLocController.close();
-  }
-}
-
-class Coordinates {
-  double lat;
-  double lon;
-
-  Coordinates(this.lat, this.lon);
-}
