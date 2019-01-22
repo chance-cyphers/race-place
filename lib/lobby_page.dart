@@ -1,8 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:race_place/entrant.dart';
-import 'package:race_place/race_api_client.dart';
+import 'package:race_place/lobby_bloc.dart';
 import 'package:race_place/race_page.dart';
 
 class LobbyPage extends StatefulWidget {
@@ -15,30 +13,33 @@ class LobbyPage extends StatefulWidget {
 }
 
 class _LobbyPageState extends State<LobbyPage> {
-  Timer timer;
+
+  LobbyBloc _lobbyBloc;
 
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(new Duration(seconds: 2), (timer) {
-      raceApiClient.getTrack(widget.entrant.links.track).then((track) {
-        if (track.status == "started") {
-          Navigator.pushAndRemoveUntil(
-              context,
-              new MaterialPageRoute(
-                  maintainState: false,
-                  builder: (BuildContext buildContext) => RacePage()),
-              ModalRoute.withName("/"));
-          timer.cancel();
-        }
-      });
+    _lobbyBloc = LobbyBloc(widget.entrant);
+    _lobbyBloc.matchFound.listen((matchFound) {
+      if (matchFound) {
+        gotoRace();
+      }
     });
+  }
+
+  void gotoRace() {
+    Navigator.pushAndRemoveUntil(
+        context,
+        new MaterialPageRoute(
+            maintainState: false,
+            builder: (BuildContext buildContext) => RacePage()),
+        ModalRoute.withName("/"));
   }
 
   @override
   void dispose() {
     super.dispose();
-    timer.cancel();
+    _lobbyBloc.close();
   }
 
   @override

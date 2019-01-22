@@ -19,19 +19,12 @@ class _RacePageState extends State<RacePage> {
     super.initState();
 
     var location = new Location();
-
-
     this._locationSubscription = location.onLocationChanged().listen((Map<String,double> currentLocation) {
       setState(() {
         _currentLat = currentLocation["latitude"];
         _currentLon = currentLocation["longitude"];
       });
-      print(currentLocation["latitude"]);
-      print(currentLocation["longitude"]);
-      print(currentLocation["accuracy"]);
-      print(currentLocation["altitude"]);
-      print(currentLocation["speed"]);
-      print(currentLocation["speed_accuracy"]); // Will always be 0 on iOS
+      print(currentLocation["latitude"].toString() + ", " + currentLocation["longitude"].toString());
     });
   }
 
