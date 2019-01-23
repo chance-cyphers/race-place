@@ -42,7 +42,7 @@ class _RacePageState extends State<RacePage> {
   Widget build(BuildContext context) {
     return StreamBuilder<RaceInfo>(
         stream: _raceBloc.model,
-        initialData: RaceInfo("", "", 0, 0),
+        initialData: RaceInfo("fetching race info...", "", 0, 0),
         builder: (context, snap) {
           return Scaffold(
             appBar: AppBar(
