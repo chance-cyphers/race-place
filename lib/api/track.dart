@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'package:race_place/api/track.g.dart';
+part 'track.g.dart';
 
 @JsonSerializable()
 class Track {
@@ -25,9 +25,10 @@ class TrackEntrant {
 
 @JsonSerializable()
 class Links {
-  Links(this.locationUpdate);
+  Links(this.locationUpdate, this.self);
 
   String locationUpdate;
+  String self;
 
   factory Links.fromJson(Map<String, dynamic> json) => _$LinksFromJson(json);
 }

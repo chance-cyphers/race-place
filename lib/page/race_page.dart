@@ -1,10 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:race_place/api/location.dart' as loc;
-import 'package:race_place/api/race_api_client.dart';
 import 'package:race_place/api/track.dart';
-import 'package:race_place/bloc/location_source.dart';
+import 'package:race_place/bloc/race_bloc.dart';
 
 class RacePage extends StatefulWidget {
   final Track track;
@@ -17,25 +13,25 @@ class RacePage extends StatefulWidget {
 
 class _RacePageState extends State<RacePage> {
 
-  LocationEventSource _locEventSource;
+  RaceBloc _raceBloc;
 
   @override
   void initState() {
     super.initState();
-    _locEventSource = LocationEventSource();
+    _raceBloc = RaceBloc(widget.track);
   }
 
   @override
   void deactivate() {
     super.deactivate();
-    _locEventSource.close();
+    _raceBloc.close();
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<Coordinates>(
-      stream: _locEventSource.currentLoc,
-      initialData: Coordinates(0, 0),
+    return StreamBuilder<Track>(
+      stream: _raceBloc.updatedTrack,
+      initialData: Track("started", []),
       builder: (context, snap) {
         return Scaffold(
           appBar: AppBar(
@@ -49,7 +45,7 @@ class _RacePageState extends State<RacePage> {
                   'You are racing now. Just so you know.',
                 ),
                 Text(
-                  snap.data.lat.toString() + ", " + snap.data.lon.toString(),
+                  snap.data.entrants.toString(),
                 ),
               ],
             ),

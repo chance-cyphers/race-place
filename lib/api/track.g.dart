@@ -34,8 +34,10 @@ Map<String, dynamic> _$TrackEntrantToJson(TrackEntrant instance) =>
     <String, dynamic>{'userId': instance.userId, 'distance': instance.distance};
 
 Links _$LinksFromJson(Map<String, dynamic> json) {
-  return Links(json['locationUpdate'] as String);
+  return Links(json['locationUpdate'] as String, json['self'] as String);
 }
 
-Map<String, dynamic> _$LinksToJson(Links instance) =>
-    <String, dynamic>{'locationUpdate': instance.locationUpdate};
+Map<String, dynamic> _$LinksToJson(Links instance) => <String, dynamic>{
+      'locationUpdate': instance.locationUpdate,
+      'self': instance.self
+    };

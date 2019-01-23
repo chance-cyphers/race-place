@@ -25,7 +25,9 @@ class LocationEventSource {
   }
 
   void close() {
-    _locationSubscription.cancel();
+    if (_locationSubscription != null) {
+      _locationSubscription.cancel();
+    }
     _currentLocController.close();
   }
 }
