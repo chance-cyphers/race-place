@@ -29,10 +29,14 @@ class _RacePageState extends State<RacePage> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<Track>(
-      stream: _raceBloc.updatedTrack,
-      initialData: Track("started", []),
+    var emptyEntrantData = TrackEntrant("", 0);
+    return StreamBuilder<RaceViewModel>(
+      stream: _raceBloc.model,
+      initialData: RaceViewModel(emptyEntrantData, emptyEntrantData),
       builder: (context, snap) {
+        var entrant1 = snap.data.entrant1;
+        var entrant2 = snap.data.entrant2;
+
         return Scaffold(
           appBar: AppBar(
             title: Text("Race place"),
@@ -45,7 +49,10 @@ class _RacePageState extends State<RacePage> {
                   'You are racing now. Just so you know.',
                 ),
                 Text(
-                  snap.data.entrants.toString(),
+                  entrant1.userId + ": " + entrant1.distance.toString() + "km",
+                ),
+                Text(
+                  entrant2.userId + ": " + entrant2.distance.toString() + "km",
                 ),
               ],
             ),
