@@ -4,6 +4,7 @@ import 'package:race_place/api/location.dart';
 import 'package:race_place/api/race_api_client.dart';
 import 'package:race_place/api/track.dart';
 import 'package:race_place/bloc/location_source.dart';
+import 'package:intl/intl.dart';
 
 class RaceBloc {
   StreamController<RaceInfo> _raceInfoController;
@@ -42,8 +43,11 @@ class RaceBloc {
   void _handleNewTrack(track) {
     var entrant1 = track.entrants[0];
     var entrant2 = track.entrants[1];
-    var label1 = entrant1.userId + ": " + entrant1.distance.toString();
-    var label2 = entrant2.userId + ": " + entrant2.distance.toString();
+
+    var f = new NumberFormat("###.##", "en_US");
+    var label1 = entrant1.userId + ": " + f.format(entrant1.distance) + " km";
+    var label2 = entrant2.userId + ": " + f.format(entrant2.distance) + " km";
+
     var model = RaceInfo(label1, label2, entrant1.distance, entrant2.distance);
     _raceInfoController.add(model);
 
