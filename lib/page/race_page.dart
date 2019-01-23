@@ -53,7 +53,7 @@ class _RacePageState extends State<RacePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Text(
-                    'You are racing now. Just so you know.',
+                    'You are racing now. Run!!!',
                   ),
                   Text(snap.data.label1),
                   LinearProgressIndicator(value: snap.data.progress1),
