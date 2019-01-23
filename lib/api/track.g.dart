@@ -13,7 +13,8 @@ Track _$TrackFromJson(Map<String, dynamic> json) {
           ?.map((e) => e == null
               ? null
               : TrackEntrant.fromJson(e as Map<String, dynamic>))
-          ?.toList())
+          ?.toList(),
+      json['winner'] as String)
     ..links = json['links'] == null
         ? null
         : Links.fromJson(json['links'] as Map<String, dynamic>);
@@ -21,6 +22,7 @@ Track _$TrackFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$TrackToJson(Track instance) => <String, dynamic>{
       'status': instance.status,
+      'winner': instance.winner,
       'entrants': instance.entrants,
       'links': instance.links
     };

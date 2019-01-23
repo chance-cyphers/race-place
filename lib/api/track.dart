@@ -4,9 +4,10 @@ part 'track.g.dart';
 
 @JsonSerializable()
 class Track {
-  Track(this.status, this.entrants);
+  Track(this.status, this.entrants, this.winner);
 
   String status;
+  String winner;
   List<TrackEntrant> entrants;
   Links links;
 

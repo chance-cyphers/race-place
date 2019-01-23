@@ -27,7 +27,6 @@ class RaceApiClient {
 
   Future<Location> updateLocation(String locLink, Location loc) {
     return _post(locLink, jsonEncode(loc.toJson())).then((response) {
-      print("resp: ${response.toString()}");
     });
   }
 

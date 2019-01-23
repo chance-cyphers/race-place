@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:race_place/api/track.dart';
 import 'package:race_place/bloc/race_bloc.dart';
+import 'package:race_place/page/finish_screen.dart';
 
 class RacePage extends StatefulWidget {
   final Track track;
@@ -19,6 +20,16 @@ class _RacePageState extends State<RacePage> {
   void initState() {
     super.initState();
     _raceBloc = RaceBloc(widget.track);
+    _raceBloc.winner.listen(_gotoFinish);
+  }
+
+  void _gotoFinish(String winner) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        new MaterialPageRoute(
+            maintainState: false,
+            builder: (BuildContext buildContext) => FinishScreen(winner: winner)),
+        ModalRoute.withName("/"));
   }
 
   @override

@@ -21,11 +21,11 @@ class _LobbyPageState extends State<LobbyPage> {
     super.initState();
     _lobbyBloc = LobbyBloc(widget.entrant);
     _lobbyBloc.trackStarted.listen((track) {
-      gotoRace(track);
+      _gotoRace(track);
     });
   }
 
-  void gotoRace(Track track) {
+  void _gotoRace(Track track) {
     Navigator.pushAndRemoveUntil(
         context,
         new MaterialPageRoute(
