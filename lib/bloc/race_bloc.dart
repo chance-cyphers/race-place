@@ -1,23 +1,22 @@
 import 'dart:async';
 
-import 'package:race_place/api/entrant.dart';
 import 'package:race_place/api/location.dart';
 import 'package:race_place/api/race_api_client.dart';
 import 'package:race_place/api/track.dart';
 import 'package:race_place/bloc/location_source.dart';
 
 class RaceBloc {
-  StreamController<RaceViewModel> _viewModelController;
+  StreamController<RaceInfo> _raceInfoController;
   StreamSubscription<Coordinates> _locationSubscription;
   LocationEventSource _locEventSource;
   Track _track;
   Timer _timer;
 
-  Stream<RaceViewModel> get model => _viewModelController.stream;
+  Stream<RaceInfo> get model => _raceInfoController.stream;
 
   RaceBloc(this._track) {
-    _viewModelController = StreamController<RaceViewModel>();
-    _viewModelController.onListen = _startLocUpdates;
+    _raceInfoController = StreamController<RaceInfo>();
+    _raceInfoController.onListen = _startLocUpdates;
     _locEventSource = LocationEventSource();
   }
 
@@ -33,10 +32,10 @@ class RaceBloc {
       });
     });
 
-    _timer = Timer.periodic(new Duration(seconds: 2), (timer) {
+    _timer = Timer.periodic(new Duration(seconds: 3), (timer) {
       raceApiClient.getTrack(_track.links.self).then((track) {
-        var vm = RaceViewModel(track.entrants[0], track.entrants[1]);
-        _viewModelController.add(vm);
+        var vm = RaceInfo(track.entrants[0], track.entrants[1]);
+        _raceInfoController.add(vm);
       });
     });
   }
@@ -48,8 +47,8 @@ class RaceBloc {
   }
 }
 
-class RaceViewModel {
+class RaceInfo {
   TrackEntrant entrant1;
   TrackEntrant entrant2;
-  RaceViewModel(this.entrant1, this.entrant2);
+  RaceInfo(this.entrant1, this.entrant2);
 }

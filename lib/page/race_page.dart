@@ -30,9 +30,9 @@ class _RacePageState extends State<RacePage> {
   @override
   Widget build(BuildContext context) {
     var emptyEntrantData = TrackEntrant("", 0);
-    return StreamBuilder<RaceViewModel>(
+    return StreamBuilder<RaceInfo>(
       stream: _raceBloc.model,
-      initialData: RaceViewModel(emptyEntrantData, emptyEntrantData),
+      initialData: RaceInfo(emptyEntrantData, emptyEntrantData),
       builder: (context, snap) {
         var entrant1 = snap.data.entrant1;
         var entrant2 = snap.data.entrant2;
