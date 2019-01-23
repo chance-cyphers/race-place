@@ -14,6 +14,7 @@ class RaceBloc {
   Timer _timer;
 
   Stream<RaceInfo> get model => _raceInfoController.stream;
+
   Stream<String> get winner => _winnerController.stream;
 
   RaceBloc(this._track) {
@@ -28,16 +29,21 @@ class RaceBloc {
       var currentLoc = Location(213, coords.lat, coords.lon);
       raceApiClient
           .updateLocation(_track.links.locationUpdate, currentLoc)
-          .then((loc) {
-      }).catchError((err) {
+          .then((loc) {})
+          .catchError((err) {
         print("ERROR UPDATING LOCATION: " + err);
       });
     });
 
     _timer = Timer.periodic(new Duration(seconds: 3), (timer) {
       raceApiClient.getTrack(_track.links.self).then((track) {
-        var vm = RaceInfo(track.entrants[0], track.entrants[1]);
-        _raceInfoController.add(vm);
+        var entrant1 = track.entrants[0];
+        var entrant2 = track.entrants[1];
+        var label1 = entrant1.userId + ": " + entrant1.distance.toString();
+        var label2 = entrant2.userId + ": " + entrant2.distance.toString();
+        var model = RaceInfo(
+            label1, label2, entrant1.distance, entrant2.distance);
+        _raceInfoController.add(model);
 
         if (track.winner != null && track.winner != "") {
           _winnerController.add(track.winner);
@@ -55,7 +61,10 @@ class RaceBloc {
 }
 
 class RaceInfo {
-  TrackEntrant entrant1;
-  TrackEntrant entrant2;
-  RaceInfo(this.entrant1, this.entrant2);
+  String label1;
+  String label2;
+  double progress1;
+  double progress2;
+
+  RaceInfo(this.label1, this.label2, this.progress1, this.progress2);
 }

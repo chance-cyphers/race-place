@@ -13,7 +13,6 @@ class RacePage extends StatefulWidget {
 }
 
 class _RacePageState extends State<RacePage> {
-
   RaceBloc _raceBloc;
 
   @override
@@ -28,7 +27,8 @@ class _RacePageState extends State<RacePage> {
         context,
         new MaterialPageRoute(
             maintainState: false,
-            builder: (BuildContext buildContext) => FinishScreen(winner: winner)),
+            builder: (BuildContext buildContext) =>
+                FinishScreen(winner: winner)),
         ModalRoute.withName("/"));
   }
 
@@ -40,36 +40,29 @@ class _RacePageState extends State<RacePage> {
 
   @override
   Widget build(BuildContext context) {
-    var emptyEntrantData = TrackEntrant("", 0);
     return StreamBuilder<RaceInfo>(
-      stream: _raceBloc.model,
-      initialData: RaceInfo(emptyEntrantData, emptyEntrantData),
-      builder: (context, snap) {
-        var entrant1 = snap.data.entrant1;
-        var entrant2 = snap.data.entrant2;
-
-        return Scaffold(
-          appBar: AppBar(
-            title: Text("Race place"),
-          ),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Text(
-                  'You are racing now. Just so you know.',
-                ),
-                Text(
-                  entrant1.userId + ": " + entrant1.distance.toString() + "km",
-                ),
-                Text(
-                  entrant2.userId + ": " + entrant2.distance.toString() + "km",
-                ),
-              ],
+        stream: _raceBloc.model,
+        initialData: RaceInfo("", "", 0, 0),
+        builder: (context, snap) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text("Race place"),
             ),
-          ),
-        );
-      }
-    );
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(
+                    'You are racing now. Just so you know.',
+                  ),
+                  Text(snap.data.label1),
+                  LinearProgressIndicator(value: snap.data.progress1),
+                  Text(snap.data.label2),
+                  LinearProgressIndicator(value: snap.data.progress2),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
