@@ -48,16 +48,24 @@ class _RacePageState extends State<RacePage> {
             appBar: AppBar(
               title: Text("Race place"),
             ),
-            body: Center(
+            body: Container(
+              padding: EdgeInsets.all(20),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    'You are racing now. Run!!!',
-                  ),
-                  Text(snap.data.label1),
+                  Container(
+                      margin: EdgeInsets.only(bottom: 70, top: 50),
+                      child: Text(
+                        'You are racing now. Run!!!',
+                      )),
+                  Container(
+                      child: Text(snap.data.label1),
+                      margin: EdgeInsets.only(bottom: 10, top: 10)),
                   LinearProgressIndicator(value: snap.data.progress1),
-                  Text(snap.data.label2),
+                  Container(
+                      child: Text(snap.data.label2),
+                      margin: EdgeInsets.only(bottom: 10, top: 50)),
                   LinearProgressIndicator(value: snap.data.progress2),
                 ],
               ),
