@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:race_place/page/home_page.dart';
+import 'package:race_place/page/login_page.dart';
 
 void main() {
   SystemChrome.setPreferredOrientations([
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: HomePage(),
+      home: LoginPage(),
     );
   }
 }
