@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:race_place/auth/credentials_keeper.dart';
+import 'package:race_place/auth/parser.dart';
 import 'package:race_place/page/lobby_page.dart';
 import 'package:race_place/api/race_api_client.dart';
 
@@ -9,6 +11,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _usernameController = TextEditingController();
+  var username = "whoever you are";
 
   void _onPress(BuildContext context) {
     var isEmpty =
@@ -17,6 +20,16 @@ class _HomePageState extends State<HomePage> {
     raceApiClient.createEntrant(username).then((entrant) {
       Navigator.of(context).push(new MaterialPageRoute(
           builder: (BuildContext buildContext) => LobbyPage(entrant: entrant)));
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    credentialsKeeper.getCredentials().then((creds) {
+      setState(() {
+        username = getName(creds.idToken);
+      });
     });
   }
 
@@ -41,7 +54,7 @@ class _HomePageState extends State<HomePage> {
               decoration: InputDecoration(hintText: "Enter a username"),
             ),
             Text(
-              'Welcome to race place',
+              'Welcome to race place, ' + username,
             ),
             RaisedButton(
               child: Text("Race"),
