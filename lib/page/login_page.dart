@@ -22,11 +22,15 @@ class _LoginState extends State<LoginPage> {
     credentialsKeeper.clear();
   }
 
+  void _hasValidCreds() {
+    print("has? " + credentialsKeeper.hasValidCreds().toString());
+  }
+
   void _get() {
-    credentialsKeeper.getCredentials().then((accessToke) {
+    credentialsKeeper.getCredentials().then((creds) {
       setState(() {
         someText =
-            "access_token: " + (accessToke == null ? "null" : accessToke);
+            "access_token: " + (creds == null ? "null" : creds.accessToken);
       });
     });
   }
@@ -53,6 +57,10 @@ class _LoginState extends State<LoginPage> {
                 RaisedButton(
                   child: Text("get"),
                   onPressed: _get,
+                ),
+                RaisedButton(
+                  child: Text("has?"),
+                  onPressed: _hasValidCreds,
                 ),
               ]),
         ));

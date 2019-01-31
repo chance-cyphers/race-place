@@ -10,7 +10,7 @@ class CredentialsKeeper {
 
   // when we login
   Future<void> save(Creds creds) {
-    return storage.write(key: "access_token", value: creds.accessToken);
+    return storage.write(key: "credentials", value: creds.toJson());
   }
 
   // when we logout
@@ -19,11 +19,17 @@ class CredentialsKeeper {
   }
 
   // so we know to refresh or what
-  bool hasValidCreds() => false;
+  bool hasValidCreds() {
+    // check when access expires
+    // check if there be refreshments
+    return false;
+  }
 
   // retrieve them if they're not expired. Or refresh
-  Future<String> getCredentials() async {
-    return storage.read(key: "access_token");
+  Future<Creds> getCredentials() async {
+    return storage.read(key: "credentials").then((json) {
+      return Creds.fromJson(json);
+    });
   }
 
 }
