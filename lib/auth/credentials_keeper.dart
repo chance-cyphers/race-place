@@ -8,22 +8,22 @@ class CredentialsKeeper {
   CredentialsKeeper._private();
   final storage = new FlutterSecureStorage();
 
+  // when we login
   Future<void> save(Creds creds) {
-    print('2');
-    return storage.write(key: "access_token", value: creds.accessToken)
-    .catchError((err) {
-      print('3: ' + err.toString());
-    });
-  } // when we login
+    return storage.write(key: "access_token", value: creds.accessToken);
+  }
 
+  // when we logout
   Future<void> clear() {
     return storage.deleteAll();
-  } // when we logout
+  }
 
-  bool hasValidCreds() => false; // so we know to refresh or what
+  // so we know to refresh or what
+  bool hasValidCreds() => false;
 
+  // retrieve them if they're not expired. Or refresh
   Future<String> getCredentials() async {
     return storage.read(key: "access_token");
-  } // retrieve them if they're not expired. Or refresh
+  }
 
 }

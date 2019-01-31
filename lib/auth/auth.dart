@@ -9,7 +9,6 @@ class AuthClient {
   AuthClient._private();
 
   Future<Creds> login(String username, String password) {
-    print('yoyo');
     return _post("https://skyfrog.auth0.com/oauth/token",
             _loginBody(username, password))
         .then((response) {

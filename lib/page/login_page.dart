@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:race_place/auth/auth.dart';
 import 'package:race_place/auth/credentials_keeper.dart';
-import 'package:race_place/auth/creds.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -12,12 +11,11 @@ class _LoginState extends State<LoginPage> {
   String someText = "what's up, and stuff";
 
   void _login() {
-    loginClient.login("test@test.com", "ChuckNorris1").then((creds) {});
-  }
-
-  void _save() {
-    print('1');
-    credentialsKeeper.save(Creds("accessssss", "", ""));
+    loginClient.login("test@test.com", "ChuckNorris1").then((creds) {
+      credentialsKeeper.save(creds);
+    }).catchError((err) {
+      print('Error saving credentials: ' + err.toString());
+    });
   }
 
   void _clear() {
@@ -27,7 +25,8 @@ class _LoginState extends State<LoginPage> {
   void _get() {
     credentialsKeeper.getCredentials().then((accessToke) {
       setState(() {
-        someText = "access_token: " + (accessToke == null ? "null" : accessToke);
+        someText =
+            "access_token: " + (accessToke == null ? "null" : accessToke);
       });
     });
   }
@@ -46,10 +45,6 @@ class _LoginState extends State<LoginPage> {
                 RaisedButton(
                   child: Text("Login"),
                   onPressed: _login,
-                ),
-                RaisedButton(
-                  child: Text("save"),
-                  onPressed: _save,
                 ),
                 RaisedButton(
                   child: Text("clear"),
