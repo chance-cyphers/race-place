@@ -27,7 +27,7 @@ class _LoginState extends State<LoginPage> {
   void _get() {
     credentialsKeeper.getCredentials().then((accessToke) {
       setState(() {
-        someText = "access_token: " + accessToke;
+        someText = "access_token: " + (accessToke == null ? "null" : accessToke);
       });
     });
   }
