@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:race_place/auth/auth.dart';
-import 'package:race_place/auth/credentials_keeper.dart';
+import 'package:race_place/bloc/login_bloc.dart';
 import 'package:race_place/page/home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -9,14 +8,29 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginPage> {
-  void _login() {
-    loginClient.login("test@test.com", "ChuckNorris1").then((creds) {
-      return credentialsKeeper.save(creds);
-    }).then((_) {
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  LoginBloc _loginBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _loginBloc = LoginBloc();
+    _loginBloc.loginSuccess.listen((_) {
       _gotoHome();
-    }).catchError((err) {
-      print('Error saving credentials: ' + err.toString());
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _loginBloc.close();
+  }
+
+  void _login() {
+    var username = _usernameController.text;
+    var password = _passwordController.text;
+    _loginBloc.login.add(LoginInfo(username, password));
   }
 
   void _gotoHome() {
@@ -34,15 +48,27 @@ class _LoginState extends State<LoginPage> {
         appBar: AppBar(
           title: Text("Race Place"),
         ),
-        body: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                RaisedButton(
-                  child: Text("Login"),
-                  onPressed: _login,
-                ),
-              ]),
-        ));
+        body: Container(
+            padding: EdgeInsets.symmetric(horizontal: 60),
+            child: Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    TextField(
+                      controller: _usernameController,
+                      decoration: InputDecoration(hintText: "Username"),
+                    ),
+                    TextField(
+                      obscureText: true,
+                      controller: _passwordController,
+                      decoration: InputDecoration(hintText: "Password"),
+                    ),
+                    RaisedButton(
+                      child: Text("Login"),
+                      onPressed: _login,
+                    ),
+                  ]),
+            )));
   }
 }
+
