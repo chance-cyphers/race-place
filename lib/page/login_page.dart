@@ -16,8 +16,10 @@ class _LoginState extends State<LoginPage> {
   void initState() {
     super.initState();
     _loginBloc = LoginBloc();
-    _loginBloc.loginSuccess.listen((_) {
-      _gotoHome();
+    _loginBloc.loginStatus.listen((status) {
+      if (status == LoginStatus.Success) {
+        _gotoHome();
+      }
     });
   }
 
@@ -44,31 +46,38 @@ class _LoginState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Race Place"),
-        ),
-        body: Container(
-            padding: EdgeInsets.symmetric(horizontal: 60),
-            child: Center(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    TextField(
-                      controller: _usernameController,
-                      decoration: InputDecoration(hintText: "Username"),
-                    ),
-                    TextField(
-                      obscureText: true,
-                      controller: _passwordController,
-                      decoration: InputDecoration(hintText: "Password"),
-                    ),
-                    RaisedButton(
-                      child: Text("Login"),
-                      onPressed: _login,
-                    ),
-                  ]),
-            )));
+    var body = Center(
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            TextField(
+              controller: _usernameController,
+              decoration: InputDecoration(hintText: "Username"),
+            ),
+            TextField(
+              obscureText: true,
+              controller: _passwordController,
+              decoration: InputDecoration(hintText: "Password"),
+            ),
+            RaisedButton(
+              child: Text("Login"),
+              onPressed: _login,
+            ),
+          ]),
+    );
+    var progressBody = Center(child: CircularProgressIndicator());
+
+    return StreamBuilder<LoginStatus>(
+        stream: _loginBloc.loginStatus,
+        builder: (context, snap) {
+          return Scaffold(
+              appBar: AppBar(
+                title: Text("Race Place"),
+              ),
+              body: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 60),
+                  child:
+                      snap.data == LoginStatus.Pending ? progressBody : body));
+        });
   }
 }
-
