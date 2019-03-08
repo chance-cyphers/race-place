@@ -1,3 +1,3 @@
-# race_place
+# Race Place
 
-A place where you race
+An Android/iOS app for racing people.
