@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:race_place/auth/creds.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -28,7 +30,7 @@ class CredentialsKeeper {
       return false;
     }
 
-    return false;
+    return true;
   }
 
   Future<Creds> getCredentials() async {

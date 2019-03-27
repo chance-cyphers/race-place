@@ -24,6 +24,14 @@ class LoginBloc {
     _loginStatusController = StreamController<LoginStatus>();
     _logInController.stream.listen(_login);
     loginStatus = _loginStatusController.stream.asBroadcastStream();
+    _loginStatusController.onListen = _checkCredentials;
+  }
+
+  void _checkCredentials() async {
+    var hasCreds = await credentialsKeeper.hasValidCreds();
+    if (hasCreds) {
+      _loginStatusController.add(LoginStatus.Success);
+    }
   }
 
   void _login(LoginInfo info) async {
