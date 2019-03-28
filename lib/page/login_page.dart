@@ -46,25 +46,7 @@ class _LoginState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    var body = Center(
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            TextField(
-              controller: _usernameController,
-              decoration: InputDecoration(hintText: "Username"),
-            ),
-            TextField(
-              obscureText: true,
-              controller: _passwordController,
-              decoration: InputDecoration(hintText: "Password"),
-            ),
-            RaisedButton(
-              child: Text("Login"),
-              onPressed: _login,
-            ),
-          ]),
-    );
+    ;
     var progressBody = Center(child: CircularProgressIndicator());
 
     return StreamBuilder<LoginStatus>(
@@ -77,7 +59,30 @@ class _LoginState extends State<LoginPage> {
               body: Container(
                   padding: EdgeInsets.symmetric(horizontal: 60),
                   child:
-                      snap.data == LoginStatus.Pending ? progressBody : body));
+                  snap.data == LoginStatus.Pending ? progressBody : _body(snap.data)));
         });
+  }
+
+  Widget _body(LoginStatus status) {
+    return Center(
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            TextField(
+              controller: _usernameController,
+              decoration: InputDecoration(hintText: "Username"),
+            ),
+            TextField(
+              obscureText: true,
+              controller: _passwordController,
+              decoration: InputDecoration(hintText: "Password"),
+            ),
+            Text((status == LoginStatus.Failure ? 'Sign in harder' : '')),
+            RaisedButton(
+              child: Text("Login"),
+              onPressed: _login,
+            ),
+          ]),
+    );
   }
 }

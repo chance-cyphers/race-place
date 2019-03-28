@@ -23,6 +23,10 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _onLogout(BuildContext context) {
+    credentialsKeeper.clear();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -49,6 +53,12 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
+            RaisedButton(
+              child: Text("Logout"),
+              onPressed: () {
+                _onLogout(context);
+              },
+            ),
             TextField(
               controller: _usernameController,
               decoration: InputDecoration(hintText: "Enter a username"),
@@ -67,4 +77,5 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
 }

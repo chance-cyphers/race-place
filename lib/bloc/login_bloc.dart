@@ -10,13 +10,14 @@ class LoginInfo {
   LoginInfo(this.username, this.password);
 }
 
-enum LoginStatus { Pending, Success }
+enum LoginStatus { Pending, Success, Failure }
 
 class LoginBloc {
   StreamController<LoginStatus> _loginStatusController;
   StreamController<LoginInfo> _logInController;
 
   Stream loginStatus;
+
   Sink<LoginInfo> get login => _logInController.sink;
 
   LoginBloc() {
@@ -34,11 +35,16 @@ class LoginBloc {
     }
   }
 
-  void _login(LoginInfo info) async {
+  void _login(LoginInfo info) {
     _loginStatusController.add(LoginStatus.Pending);
-    var creds = await loginClient.login("test@test.com", "ChuckNorris1");
-    await credentialsKeeper.save(creds);
-    _loginStatusController.add(LoginStatus.Success);
+//    var creds = await loginClient.login("test@test.com", "ChuckNorris1");
+    loginClient.login(info.username, info.password).then((creds) {
+      return credentialsKeeper.save(creds);
+    }).then((_) {
+      return _loginStatusController.add(LoginStatus.Success);
+    }).catchError((err) {
+      _loginStatusController.add(LoginStatus.Failure);
+    });
   }
 
   void close() {
