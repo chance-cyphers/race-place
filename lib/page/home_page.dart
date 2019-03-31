@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
 
   void _onLogout(BuildContext context) {
     credentialsKeeper.clear();
+    Navigator.of(context).pushNamedAndRemoveUntil("/", (_) => false);
   }
 
   @override
