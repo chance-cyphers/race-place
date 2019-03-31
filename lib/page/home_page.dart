@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var username = "whoever you are";
 
-  void _onPress(BuildContext context) {
+  void _onRace(BuildContext context) {
     raceApiClient.createEntrant(username).then((entrant) {
       Navigator.of(context).push(new MaterialPageRoute(
           builder: (BuildContext buildContext) => LobbyPage(entrant: entrant)));
@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
             RaisedButton(
               child: Text("Race"),
               onPressed: () {
-                _onPress(context);
+                _onRace(context);
               },
             ),
           ],

@@ -36,17 +36,11 @@ class _LoginState extends State<LoginPage> {
   }
 
   void _gotoHome() {
-    Navigator.pushAndRemoveUntil(
-        context,
-        new MaterialPageRoute(
-            maintainState: false,
-            builder: (BuildContext buildContext) => HomePage()),
-        ModalRoute.withName("/"));
+    Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
   }
 
   @override
   Widget build(BuildContext context) {
-    ;
     var progressBody = Center(child: CircularProgressIndicator());
 
     return StreamBuilder<LoginStatus>(
