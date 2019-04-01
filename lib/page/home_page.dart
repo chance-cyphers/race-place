@@ -54,29 +54,43 @@ class _HomePageState extends State<HomePage> {
           ),
           body: Container(
             padding: EdgeInsets.symmetric(horizontal: 60),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                RaisedButton(
-                  child: Text("Logout"),
-                  onPressed: () {
-                    _onLogout(context);
-                  },
-                ),
-                Text(
-                  snap.data,
-                ),
-                RaisedButton(
-                  child: Text("Race"),
-                  onPressed: () {
-                    _onRace(context);
-                  },
-                ),
-              ],
-            ),
+            child: snap.data == "" ? _loadingBody() : _body(snap.data),
           ),
         );
       },
+    );
+  }
+
+  Widget _loadingBody() {
+    return Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+          Text("Waking up servers..."),
+          CircularProgressIndicator()
+        ]));
+  }
+
+  Widget _body(String data) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        RaisedButton(
+          child: Text("Logout"),
+          onPressed: () {
+            _onLogout(context);
+          },
+        ),
+        Text(
+          data,
+        ),
+        RaisedButton(
+          child: Text("Race"),
+          onPressed: () {
+            _onRace(context);
+          },
+        ),
+      ],
     );
   }
 }
