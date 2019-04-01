@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:race_place/bloc/login_bloc.dart';
 import 'package:race_place/page/home_page.dart';
+import 'package:race_place/page/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -35,6 +36,10 @@ class _LoginState extends State<LoginPage> {
     _loginBloc.login.add(LoginInfo(username, password));
   }
 
+  void _signUp() {
+    Navigator.of(context).push(new MaterialPageRoute(builder: (context) => SignupPage()));
+  }
+
   void _gotoHome() {
     Navigator.of(context).pushAndRemoveUntil(
         new MaterialPageRoute(
@@ -63,7 +68,7 @@ class _LoginState extends State<LoginPage> {
   }
 
   Widget _body(LoginStatus status) {
-    var passwordFocusNode = new FocusNode();
+    var passFocusNode = new FocusNode();
     return Center(
       child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -72,13 +77,13 @@ class _LoginState extends State<LoginPage> {
               controller: _usernameController,
               decoration: InputDecoration(hintText: "Username"),
               keyboardType: TextInputType.emailAddress,
-              onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(passwordFocusNode),
+              onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(passFocusNode),
             ),
             TextFormField(
               obscureText: true,
               controller: _passwordController,
               decoration: InputDecoration(hintText: "Password"),
-              focusNode: passwordFocusNode,
+              focusNode: passFocusNode,
               onFieldSubmitted: (_) => _login(),
             ),
             Text((status == LoginStatus.Failure ? 'Sign in harder' : '')),
@@ -86,7 +91,12 @@ class _LoginState extends State<LoginPage> {
               child: Text("Login"),
               onPressed: _login,
             ),
+            RaisedButton(
+              child: Text("Sign Up"),
+              onPressed: _signUp,
+            )
           ]),
     );
   }
+
 }

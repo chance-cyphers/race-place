@@ -21,6 +21,11 @@ class AuthClient {
     });
   }
 
+  Future signUp(String username, String password) {
+    return _post("https://skyfrog.auth0.com/dbconnections/signup",
+        _signUpBody(username, password));
+  }
+
   Future<http.Response> _post(String url, String json) {
     return http.post(url,
         body: json,
@@ -31,10 +36,18 @@ class AuthClient {
 }
 
 String _loginBody(String username, String password) {
-  return jsonEncode(_toMap(username, password));
+  return jsonEncode(_loginMap(username, password));
 }
 
-Map<String, dynamic> _toMap(String username, String password) =>
+String _signUpBody(String username, String password) {
+  return jsonEncode(<String, dynamic>{
+    'email': username,
+    'password': password,
+    'connection': 'Username-Password-Authentication'
+  });
+}
+
+Map<String, dynamic> _loginMap(String username, String password) =>
     <String, dynamic>{
       'username': username,
       'password': password,
