@@ -63,18 +63,23 @@ class _LoginState extends State<LoginPage> {
   }
 
   Widget _body(LoginStatus status) {
+    var passwordFocusNode = new FocusNode();
     return Center(
       child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            TextField(
+            TextFormField(
               controller: _usernameController,
               decoration: InputDecoration(hintText: "Username"),
+              keyboardType: TextInputType.emailAddress,
+              onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(passwordFocusNode),
             ),
-            TextField(
+            TextFormField(
               obscureText: true,
               controller: _passwordController,
               decoration: InputDecoration(hintText: "Password"),
+              focusNode: passwordFocusNode,
+              onFieldSubmitted: (_) => _login(),
             ),
             Text((status == LoginStatus.Failure ? 'Sign in harder' : '')),
             RaisedButton(
