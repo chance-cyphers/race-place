@@ -19,7 +19,12 @@ class CredentialsKeeper {
   }
 
   Future<bool> hasValidCreds() async {
-    var creds = await _retrieveCredentials();
+    var json = await storage.read(key: "credentials");
+    if (json == null) {
+      return false;
+    }
+
+    var creds = Creds.fromJson(json);
 
     if (creds.accessToken == null) {
       return false;
@@ -34,12 +39,9 @@ class CredentialsKeeper {
   }
 
   Future<Creds> getCredentials() async {
-    return await _retrieveCredentials();
-  }
-
-  Future<Creds> _retrieveCredentials() {
     return storage.read(key: "credentials").then((json) {
       return Creds.fromJson(json);
     });
   }
+
 }
