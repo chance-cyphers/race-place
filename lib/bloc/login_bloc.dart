@@ -23,6 +23,7 @@ class LoginBloc {
   LoginBloc() {
     _logInController = StreamController<LoginInfo>();
     _loginStatusController = StreamController<LoginStatus>();
+
     _logInController.stream.listen(_login);
     loginStatus = _loginStatusController.stream.asBroadcastStream();
     _loginStatusController.onListen = _checkCredentials;

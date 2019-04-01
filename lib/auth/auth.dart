@@ -23,7 +23,12 @@ class AuthClient {
 
   Future signUp(String username, String password) {
     return _post("https://skyfrog.auth0.com/dbconnections/signup",
-        _signUpBody(username, password));
+            _signUpBody(username, password))
+        .then((response) {
+      if (response.statusCode != 200) {
+        return Future.error(Error());
+      }
+    });
   }
 
   Future<http.Response> _post(String url, String json) {
