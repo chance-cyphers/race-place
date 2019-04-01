@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<String>(
-      stream: _homeBloc.username,
+      stream: _homeBloc.greeting,
       initialData: "",
       builder: (context, snap) {
         return Scaffold(
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
                 Text(
-                  'Welcome to race place, ' + snap.data,
+                  snap.data,
                 ),
                 RaisedButton(
                   child: Text("Race"),

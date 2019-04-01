@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:http/http.dart' as http;
 import 'package:race_place/api/entrant.dart';
 import 'package:race_place/api/location.dart';
@@ -16,6 +18,12 @@ class RaceApiClient {
     var json = jsonEncode(new CreateEntrantRequest(userId).toJson());
     return _post(_host + "/v2/entrant", json).then((response) {
       return Entrant.fromJson(jsonDecode(response.body));
+    });
+  }
+
+  Future<String> getGreeting() {
+    return http.get(_host).then((response) {
+      return jsonDecode(response.body)["body"];
     });
   }
 
