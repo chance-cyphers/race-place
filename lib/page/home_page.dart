@@ -3,6 +3,7 @@ import 'package:race_place/auth/credentials_keeper.dart';
 import 'package:race_place/auth/parser.dart';
 import 'package:race_place/page/lobby_page.dart';
 import 'package:race_place/api/race_api_client.dart';
+import 'package:race_place/page/login_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,14 +15,17 @@ class _HomePageState extends State<HomePage> {
 
   void _onRace(BuildContext context) {
     raceApiClient.createEntrant(username).then((entrant) {
-      Navigator.of(context).push(new MaterialPageRoute(
-          builder: (BuildContext buildContext) => LobbyPage(entrant: entrant)));
+      var lobbyRoute = new MaterialPageRoute(
+          builder: (BuildContext buildContext) => LobbyPage(entrant: entrant));
+      Navigator.of(context).push(lobbyRoute);
     });
   }
 
   void _onLogout(BuildContext context) {
     credentialsKeeper.clear();
-    Navigator.of(context).pushNamedAndRemoveUntil("/", (_) => false);
+    var loginRoute = new MaterialPageRoute(
+        maintainState: false, builder: (buildContext) => LoginPage());
+    Navigator.of(context).pushAndRemoveUntil(loginRoute, (route) => false);
   }
 
   @override

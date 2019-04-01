@@ -26,12 +26,10 @@ class _LobbyPageState extends State<LobbyPage> {
   }
 
   void _gotoRace(Track track) {
-    Navigator.pushAndRemoveUntil(
-        context,
-        new MaterialPageRoute(
+    var raceRoute = new MaterialPageRoute(
             maintainState: false,
-            builder: (BuildContext buildContext) => RacePage(track: track)),
-        ModalRoute.withName("/"));
+            builder: (BuildContext buildContext) => RacePage(track: track));
+    Navigator.of(context).pushReplacement(raceRoute);
   }
 
   @override

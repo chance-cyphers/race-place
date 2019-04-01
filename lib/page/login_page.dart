@@ -36,7 +36,11 @@ class _LoginState extends State<LoginPage> {
   }
 
   void _gotoHome() {
-    Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+    Navigator.of(context).pushAndRemoveUntil(
+        new MaterialPageRoute(
+            maintainState: false,
+            builder: (BuildContext buildContext) => HomePage()),
+        (route) => false);
   }
 
   @override
@@ -52,8 +56,9 @@ class _LoginState extends State<LoginPage> {
               ),
               body: Container(
                   padding: EdgeInsets.symmetric(horizontal: 60),
-                  child:
-                  snap.data == LoginStatus.Pending ? progressBody : _body(snap.data)));
+                  child: snap.data == LoginStatus.Pending
+                      ? progressBody
+                      : _body(snap.data)));
         });
   }
 
