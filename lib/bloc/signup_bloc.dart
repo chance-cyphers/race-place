@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:race_place/auth/auth.dart';
+import 'package:race_place/auth/credentials_keeper.dart';
 
 class SignupInfo {
   String username;
@@ -35,6 +36,10 @@ class SignupBloc {
     }
 
     loginClient.signUp(info.username, info.password).then((_) {
+      return loginClient.login(info.username, info.password);
+    }).then((creds) {
+      return credentialsKeeper.save(creds);
+    }).then((_) {
       _userCreatedController.add(null);
     }).catchError((err) {
       _errorController.add(err.toString());
