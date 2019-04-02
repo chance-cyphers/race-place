@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:race_place/bloc/login_bloc.dart';
 import 'package:race_place/bloc/signup_bloc.dart';
 
 class SignupPage extends StatefulWidget {
@@ -24,7 +23,7 @@ class _SignupState extends State<SignupPage> {
   void _signUp() {
     var username = _usernameController.text;
     var password = _passwordController.text;
-    _signupBloc.signup.add(LoginInfo(username, password));
+    _signupBloc.signup.add(SignupInfo(username, password, ""));
   }
 
   @override
@@ -35,18 +34,24 @@ class _SignupState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Signup"),
-      ),
-      body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 60),
-          child: _body(),
-      )
+    return StreamBuilder<String>(
+      stream: _signupBloc.whenError,
+      initialData: "",
+      builder: (context, snap) {
+        return Scaffold(
+            appBar: AppBar(
+              title: Text("Signup"),
+            ),
+            body: Container(
+              padding: EdgeInsets.symmetric(horizontal: 60),
+              child: _body(snap.data),
+            )
+        );
+      }
     );
   }
 
-  Widget _body() {
+  Widget _body(error) {
     var passwordFocusNode = new FocusNode();
 
     return Center(
@@ -66,6 +71,7 @@ class _SignupState extends State<SignupPage> {
               focusNode: passwordFocusNode,
               onFieldSubmitted: (_) => _signUp(),
             ),
+            Text(error),
             RaisedButton(
               child: Text("Sign Up"),
               onPressed: _signUp,

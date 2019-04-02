@@ -1,14 +1,21 @@
 import 'dart:async';
 
 import 'package:race_place/auth/auth.dart';
-import 'package:race_place/bloc/login_bloc.dart';
+
+class SignupInfo {
+  String username;
+  String password;
+  String passwordConf;
+
+  SignupInfo(this.username, this.password, this.passwordConf);
+}
 
 class SignupBloc {
-  StreamController<LoginInfo> _signupController;
+  StreamController<SignupInfo> _signupController;
   StreamController<String> _errorController;
   StreamController _userCreatedController;
 
-  Sink<LoginInfo> get signup => _signupController.sink;
+  Sink<SignupInfo> get signup => _signupController.sink;
 
   Stream get whenSuccess => _userCreatedController.stream;
   Stream<String> get whenError => _errorController.stream;
@@ -21,11 +28,11 @@ class SignupBloc {
     _signupController.stream.listen(_onSignup);
   }
 
-  void _onSignup(LoginInfo info) {
+  void _onSignup(SignupInfo info) {
     loginClient.signUp(info.username, info.password).then((_) {
       _userCreatedController.add(null);
     }).catchError((err) {
-      _errorController.add("whoops");
+      _errorController.add(err.toString());
     });
   }
 

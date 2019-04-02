@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'dart:convert';
 
 import 'package:race_place/auth/creds.dart';
@@ -26,9 +27,21 @@ class AuthClient {
             _signUpBody(username, password))
         .then((response) {
       if (response.statusCode != 200) {
-        return Future.error(Error());
+        return Future.error(_parseErrorMsg(response));
       }
     });
+  }
+
+  String _parseErrorMsg(Response response) {
+    var errorMsg1 = jsonDecode(response.body)['error'];
+    var errorMsg2 = jsonDecode(response.body)['message'];
+    var errorMsg3 = jsonDecode(response.body)['description'];
+
+    return
+      errorMsg1 != null ? errorMsg1 :
+      errorMsg2 != null ? errorMsg2 :
+      errorMsg3 != null ? errorMsg3 :
+      "An error occurred";
   }
 
   Future<http.Response> _post(String url, String json) {
