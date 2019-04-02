@@ -29,6 +29,11 @@ class SignupBloc {
   }
 
   void _onSignup(SignupInfo info) {
+    if (info.password != info.passwordConf) {
+      _errorController.add("Passwords do not match");
+      return;
+    }
+
     loginClient.signUp(info.username, info.password).then((_) {
       _userCreatedController.add(null);
     }).catchError((err) {

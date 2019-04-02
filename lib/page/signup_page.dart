@@ -9,6 +9,7 @@ class SignupPage extends StatefulWidget {
 class _SignupState extends State<SignupPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPassController = TextEditingController();
   SignupBloc _signupBloc;
 
   @override
@@ -23,7 +24,8 @@ class _SignupState extends State<SignupPage> {
   void _signUp() {
     var username = _usernameController.text;
     var password = _passwordController.text;
-    _signupBloc.signup.add(SignupInfo(username, password, ""));
+    var passwordConf = _confirmPassController.text;
+    _signupBloc.signup.add(SignupInfo(username, password, passwordConf));
   }
 
   @override
@@ -53,6 +55,7 @@ class _SignupState extends State<SignupPage> {
 
   Widget _body(error) {
     var passwordFocusNode = new FocusNode();
+    var confirmPassFocusNode = new FocusNode();
 
     return Center(
       child: Column(
@@ -69,6 +72,13 @@ class _SignupState extends State<SignupPage> {
               controller: _passwordController,
               decoration: InputDecoration(hintText: "Password"),
               focusNode: passwordFocusNode,
+              onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(confirmPassFocusNode),
+            ),
+            TextFormField(
+              obscureText: true,
+              controller: _confirmPassController,
+              decoration: InputDecoration(hintText: "Confirm Password"),
+              focusNode: confirmPassFocusNode,
               onFieldSubmitted: (_) => _signUp(),
             ),
             Text(error),
