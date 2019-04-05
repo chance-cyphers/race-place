@@ -2,15 +2,13 @@ version: 2
 jobs:
   build:
     docker:
-    - image: debian:stretch
+    - image: cirrusci/flutter
 
     steps:
     - checkout
 
     - run:
-        name: Greeting
-        command: echo Hello, world.
+        command: flutter doctor
 
     - run:
-        name: Print the Current Time
-        command: date
+        command: flutter test
