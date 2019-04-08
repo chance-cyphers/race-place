@@ -75,7 +75,7 @@ class _LoginState extends State<LoginPage> {
           children: <Widget>[
             TextFormField(
               controller: _usernameController,
-              decoration: InputDecoration(hintText: "Username"),
+              decoration: InputDecoration(hintText: "Email"),
               keyboardType: TextInputType.emailAddress,
               onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(passFocusNode),
             ),
